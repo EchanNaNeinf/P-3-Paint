@@ -2,41 +2,51 @@ void setup(){
   size(400,400);
 }
 color color1 = #FFFFFF;
-color color2 = #888888;
-color color3 = #000000;
+color color2 = #AAAAAA;
+color color3 = #444444;
 color currentcolor = color1;
+int circlescale = 200;
 void draw(){
+  background(255);
   strokeWeight(5);
   fill(color1);
-  if(300<=mouseX & mouseX<=350 & 25<=mouseY & mouseY<=75){
-    strokeWeight(2);
-  }
-  rect(300,25,50,50);
+  tactile(200,350);
+  rect(175,325,50,50);
   strokeWeight(5);
   fill(color2);
-  if(50<=mouseX & mouseX<=100 & 175<=mouseY & mouseY<=225){
-    strokeWeight(2);
-  }
-  rect(50,175,50,50);
+  tactile(75,350);
+  rect(50,325,50,50);
   strokeWeight(5);
   fill(color3);
-  if(300<=mouseX & mouseX<=350 & 325<=mouseY & mouseY<=375){
-    strokeWeight(2);
-  }
+  tactile(325,350);
   rect(300,325,50,50);
   strokeWeight(5);
   fill(currentcolor);
-  circle(250,200,200);
-  
+  circle(250,200,circlescale);
+  line(75,100,75,300);
+  fill(color1);
+  tactile(75,circlescale+100);
+  circle(75,circlescale+100,20);
 }
-
+void tactile(int buttonX,int buttonY){
+  if(buttonX-25<=mouseX & mouseX<=buttonX+25 & buttonY-25<=mouseY & mouseY<=buttonY+75){
+    strokeWeight(2);
+  }
+}
 void mouseReleased(){
+  //color 
   if (300<=mouseX & mouseX<=350 & 325<=mouseY & mouseY<=375){
     currentcolor = color3;
-  }else if(50<=mouseX & mouseX<=100 & 175<=mouseY & mouseY<=225){
+  }else if(50<=mouseX & mouseX<=100 & 325<=mouseY & mouseY<=375){
     currentcolor = color2;
-  }else if(300<=mouseX & mouseX<=350 & 25<=mouseY & mouseY<=75){
+  }else if(175<=mouseX & mouseX<=225 & 325<=mouseY & mouseY<=375){
     currentcolor = color1;
   }
-  
+
+}
+void mouseDragged(){
+ //slider
+  if(mouseX > 50 && mouseX < 100 && mouseY > 100 && mouseY < 300){
+    circlescale = mouseY-100;
+  }  
 }
