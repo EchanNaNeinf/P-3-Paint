@@ -1,5 +1,5 @@
 void setup(){
-  size(400,400);
+  size(800,600);
 }
 color color1 = #FFFFFF;
 color color2 = #AAAAAA;
@@ -7,8 +7,11 @@ color color3 = #444444;
 color currentcolor = color1;
 int circlescale = 200;
 void draw(){
-  background(255);
-  strokeWeight(5);
+  noStroke();
+  fill(currentcolor);
+  fill(color2);
+  rect(0,0,200,600);
+  stroke(5);
   fill(color1);
   tactile(200,350);
   rect(175,325,50,50);
@@ -22,11 +25,10 @@ void draw(){
   rect(300,325,50,50);
   strokeWeight(5);
   fill(currentcolor);
-  circle(250,200,circlescale);
-  line(75,100,75,300);
+  line(25,100,25,300);
   fill(color1);
   tactile(75,circlescale+100);
-  circle(75,circlescale+100,20);
+  circle(25,circlescale+100,20);
 }
 void tactile(int buttonX,int buttonY){
   if(buttonX-25<=mouseX & mouseX<=buttonX+25 & buttonY-25<=mouseY & mouseY<=buttonY+75){
@@ -46,7 +48,10 @@ void mouseReleased(){
 }
 void mouseDragged(){
  //slider
-  if(mouseX > 50 && mouseX < 100 && mouseY > 100 && mouseY < 300){
+ fill(currentcolor);
+ noStroke();
+  circle(mouseX,mouseY,circlescale/2);
+  if(mouseX > 0 && mouseX < 50 && mouseY > 100 && mouseY < 500){
     circlescale = mouseY-100;
   }  
 }
