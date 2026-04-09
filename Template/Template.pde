@@ -32,6 +32,12 @@ void draw(){
   fill(currentcolor);
   line(25,100,25,500);
   circle(25,circlescale+100,20);
+  fill(color1);
+  rect(25,25,150,50);
+  rect(25,525,150,50);
+  fill(0,0,0);
+  textSize(40);
+  text("Clear",55,61);
 }
 
 void tactile(int buttonX,int buttonY){
@@ -50,14 +56,18 @@ void mouseReleased(){
     currentcolor = color1;
   }else if(100<=mouseX & mouseX<=150 & 100<=mouseY & mouseY<=150){
     currentcolor = color4;
+  }else if(25<=mouseX & mouseX<=175 & 25<=mouseY & mouseY<= 75){
+    background(#CCCCCC);
+  }else if(25<=mouseX & mouseY<=175 & 525<= mouseY & mouseY <= 575){
+    save("sketch.png");
   }
   
 }
 void mouseDragged(){
  //slider
  fill(currentcolor);
- noStroke();
-  circle(mouseX,mouseY,circlescale/2);
+ strokeWeight(circlescale/5);
+ line(mouseX, mouseY, pmouseX,pmouseY);
   if(mouseX > 0 && mouseX < 50 && mouseY > 100 && mouseY < 500){
     circlescale = mouseY-100;
   }  
