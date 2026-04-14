@@ -1,5 +1,5 @@
-void setup(){
-  size(800,600);
+void setup() {
+  size(800, 600);
 }
 color color1 = #FFFFFF;
 color color2 = #AAAAAA;
@@ -7,68 +7,97 @@ color color3 = #444444;
 color color4 = #000000;
 color currentcolor = color1;
 int circlescale = 200;
-void draw(){
+void draw() {
   noStroke();
   fill(color2);
-  rect(0,0,200,600);
+  rect(0, 0, 200, 600);
   stroke(5);
   strokeWeight(5);
   fill(color1);
-  tactile(125,425);
-  rect(100,400,50,50);
+  tactile(125, 425);
+  rect(100, 400, 50, 50);
   strokeWeight(5);
   fill(color2);
-  tactile(125,325);
-  rect(100,300,50,50);
+  tactile(125, 325);
+  rect(100, 300, 50, 50);
   strokeWeight(5);
   fill(color3);
-  tactile(125,225);
-  rect(100,200,50,50);
+  tactile(125, 225);
+  rect(100, 200, 50, 50);
   strokeWeight(5);
   fill(color4);
-  tactile(125,125);
+  tactile(125, 125);
   strokeWeight(5);
-  rect(100,100,50,50);
+  rect(100, 100, 50, 50);
+  line(25, 100, 25, 500);
   fill(currentcolor);
-  line(25,100,25,500);
-  circle(25,circlescale+100,20);
+  circle(25, circlescale+100, 20);
   fill(color1);
-  rect(25,25,150,50);
-  rect(25,525,150,50);
-  fill(0,0,0);
+  rect(25, 25, 150, 50);
+  rect(50, 475, 125, 50);
+  rect(25, 525, 150, 50);
+  fill(0, 0, 0);
   textSize(40);
-  text("Clear",55,61);
+  text("Clear", 55, 61);
+  text("Save", 55, 561);
+  text("Load", 75, 511);
 }
 
-void tactile(int buttonX,int buttonY){
-  if(buttonX-25<=mouseX & mouseX<=buttonX+25 & buttonY-25<=mouseY & mouseY<=buttonY+75){
+void tactile(int buttonX, int buttonY) {
+  if (buttonX-25<=mouseX & mouseX<=buttonX+25 & buttonY-25<=mouseY & mouseY<=buttonY+25) {
     strokeWeight(2);
   }
 }
 
-void mouseReleased(){
-  //color 
-  if (100<=mouseX & mouseX<=150 & 200<=mouseY & mouseY<=250){
+void mouseReleased() {
+  //color
+  if (100<=mouseX & mouseX<=150 & 200<=mouseY & mouseY<=250) {
     currentcolor = color3;
-  }else if(100<=mouseX & mouseX<=150 & 300<=mouseY & mouseY<=350){
+  } else if (100<=mouseX & mouseX<=150 & 300<=mouseY & mouseY<=350) {
     currentcolor = color2;
-  }else if(100<=mouseX & mouseX<=150 & 400<=mouseY & mouseY<=450){
+  } else if (100<=mouseX & mouseX<=150 & 400<=mouseY & mouseY<=450) {
     currentcolor = color1;
-  }else if(100<=mouseX & mouseX<=150 & 100<=mouseY & mouseY<=150){
+  } else if (100<=mouseX & mouseX<=150 & 100<=mouseY & mouseY<=150) {
     currentcolor = color4;
-  }else if(25<=mouseX & mouseX<=175 & 25<=mouseY & mouseY<= 75){
-    background(#CCCCCC);
-  }else if(25<=mouseX & mouseY<=175 & 525<= mouseY & mouseY <= 575){
-    save("sketch.png");
   }
-  
+  //new button
+  if (25<=mouseX && mouseX<=175 && 25<=mouseY && mouseY<= 75) {
+    background(#CCCCCC);
+  }
+  //save button
+  if (25<=mouseX && mouseX<=175 && 525<= mouseY && mouseY <= 575) {
+    selectOutput("Choose a name", "saveImage");
+  }
+  //load button
+  if(25<=mouseX && mouseX<=175 && 475<= mouseY && mouseY <= 525){
+    selectInput("Choose a file", "loadImage");
+  }
 }
-void mouseDragged(){
- //slider
- fill(currentcolor);
- strokeWeight(circlescale/5);
- line(mouseX, mouseY, pmouseX,pmouseY);
-  if(mouseX > 0 && mouseX < 50 && mouseY > 100 && mouseY < 500){
+void saveImage(File f) {
+  if (f!= null) {
+    PImage canvas = get(200, 1, width-200, height-1);
+    canvas.save(f.getAbsolutePath());
+  }
+}
+void loadImage(File f){
+  if(f != null){
+    int n = 0;
+    //load image
+    while(n<10){
+      PImage pic = loadImage(f.getPath());
+      image(pic,0,0);
+      n++;
+    }
+  }
+}
+void mouseDragged() {
+  //slider
+  fill(currentcolor);
+  strokeWeight(circlescale/5);
+  stroke(currentcolor);
+  line(mouseX, mouseY, pmouseX, pmouseY);
+  if (mouseX > 0 && mouseX < 50 && mouseY > 100 && mouseY < 500) {
     circlescale = mouseY-100;
-  }  
+  }
+  stroke(0);
 }
