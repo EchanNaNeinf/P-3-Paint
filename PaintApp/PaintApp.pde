@@ -104,8 +104,9 @@ void mouseReleased() {
   }
 }
 void saveImage(File f) {
+  print("test");
   if (f!= null) {
-    PImage canvas = get(200, 1, width-200, height-1);
+    PImage canvas = get(400, 0, width*2-400, height*2);
     canvas.save(f.getAbsolutePath());
   }
 }
