@@ -1,5 +1,7 @@
+PImage photo;
 void setup() {
   size(800, 600);
+  photo = loadImage("sorry.png");
 }
 color color1 = #FFFFFF;
 color color2 = #AAAAAA;
@@ -8,7 +10,7 @@ color color4 = #000000;
 color currentcolor = color1;
 int circlescale = 200;
 int PenMode = 1;
-boolean stampmode = true;
+int stampmode = 0;
 void draw() {
   noStroke();
   fill(color2);
@@ -24,13 +26,13 @@ void draw() {
   rect(100, 350, 50, 50);
   strokeWeight(5);
   fill(color3);
-  tactile(125, 325);
-  rect(100, 300, 50, 50);
+  tactile(75, 425);
+  rect(50, 400, 50, 50);
   strokeWeight(5);
   fill(color4);
-  tactile(125, 275);
+  tactile(125, 375);
   strokeWeight(5);
-  rect(100, 250, 50, 50);
+  rect(50, 350, 50, 50);
   line(25, 100, 25, 500);
   fill(currentcolor);
   circle(25, circlescale+100, 20);
@@ -41,7 +43,7 @@ void draw() {
   } else {
     rect(75, 120, 50, 40);
   }
-  if (stampmode) {
+  if (stampmode == 0) {
     fill(color2);
   }
   rect(50, 175, 100, 75);
@@ -64,19 +66,27 @@ void tactile(int buttonX, int buttonY) {
 }
 
 void mouseReleased() {
-  //circle stamp
-  if (stampmode) {
-    fill(currentcolor);
-    circle(mouseX, mouseY, circlescale);
+  //Stamp Buttons
+  System.out.print(stampmode);
+  if (50<=mouseX&&175<=mouseY && mouseX<=150 && mouseY<=250) {
+    if (stampmode == 0){
+      stampmode++;
+    }else{
+      stampmode=0;
+    }
+  }
+  //stamp action
+  if (stampmode!= 0) {
+     image(photo,mouseX,mouseY);
   }
   //color
-  if (100<=mouseX & mouseX<=150 & 300<=mouseY & mouseY<=350) {
+  if (50<=mouseX & mouseX<=100 & 400<=mouseY & mouseY<=450) {
     currentcolor = color3;
   } else if (100<=mouseX & mouseX<=150 & 350<=mouseY & mouseY<=400) {
     currentcolor = color2;
   } else if (100<=mouseX & mouseX<=150 & 400<=mouseY & mouseY<=450) {
     currentcolor = color1;
-  } else if (100<=mouseX & mouseX<=150 & 250<=mouseY & mouseY<=300) {
+  } else if (50<=mouseX & mouseX<=100 & 350<=mouseY & mouseY<=400) {
     currentcolor = color4;
   }
   //Pen Button
@@ -85,10 +95,6 @@ void mouseReleased() {
     if (PenMode == 3) {
       PenMode=1;
     }
-  }
-  //Stamp Button
-  if (50<=mouseX&&175<=mouseY && mouseX<=150 && mouseY<=250) {
-    stampmode = !stampmode;
   }
   //new button
   if (25<=mouseX && mouseX<=175 && 25<=mouseY && mouseY<= 75) {
@@ -124,7 +130,7 @@ void loadImage(File f) {
 void mouseDragged() {
   //slider
   fill(currentcolor);
-  if (!stampmode) {
+  if (stampmode==0) {
     if (PenMode == 1) {
       strokeWeight(circlescale/5);
       stroke(currentcolor);
