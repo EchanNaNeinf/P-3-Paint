@@ -1,7 +1,9 @@
 PImage photo;
+PImage photo2;
 void setup() {
   size(800, 600);
   photo = loadImage("sorry.png");
+  photo2 = loadImage("Seal.png");
 }
 color color1 = #FFFFFF;
 color color2 = #AAAAAA;
@@ -30,28 +32,46 @@ void draw() {
   rect(50, 400, 50, 50);
   strokeWeight(5);
   fill(color4);
-  tactile(125, 375);
-  strokeWeight(5);
+  tactile(75, 375);
   rect(50, 350, 50, 50);
+  strokeWeight(5);
   line(25, 100, 25, 500);
   fill(currentcolor);
+  tactileCircle(25, circlescale+100, 10);
   circle(25, circlescale+100, 20);
+  strokeWeight(5);
   fill(color1);
+  customtactile(50,100,150,175);
   rect(50, 100, 100, 75);
   if (PenMode == 1) {
     circle(100, 140, 50);
   } else {
     rect(75, 120, 50, 40);
   }
-  if (stampmode == 0) {
+  if (stampmode != 0) {
     fill(color2);
   }
-  rect(50, 175, 100, 75);
+  strokeWeight(5);
+  tactileCircle(100, 250, 50);
+  ellipse(100, 250, 100, 100);
+  if (stampmode == 1) {
+    image(photo, 52, 215);
+  } else if (stampmode == 2) {
+    image(photo2, 25, 195);
+  } else {
+    line(75, 225, 130, 275);
+  }
+  strokeWeight(5);
   fill(color1);
-  circle(100, 215, 50);
+  customtactile(25, 25, 175, 75);
   rect(25, 25, 150, 50);
+  strokeWeight(5);
+  customtactile(50, 475, 175, 525);
   rect(50, 475, 125, 50);
+  strokeWeight(5);
+  customtactile(25, 525, 175, 575);
   rect(25, 525, 150, 50);
+  strokeWeight(5);
   fill(0, 0, 0);
   textSize(40);
   text("Clear", 55, 61);
@@ -64,20 +84,34 @@ void tactile(int buttonX, int buttonY) {
     strokeWeight(2);
   }
 }
+void customtactile(int buttonX1, int buttonY1, int buttonX2, int buttonY2) {
+  if (buttonX1<=mouseX & mouseX<=buttonX2 & buttonY1<=mouseY & mouseY<=buttonY2) {
+    strokeWeight(2);
+  }
+}
+void tactileCircle(int buttonX, int buttonY, int bR) {
+  if (dist(mouseX, mouseY, buttonX, buttonY) <= bR) {
+    strokeWeight(2);
+  }
+}
 
 void mouseReleased() {
   //Stamp Buttons
   System.out.print(stampmode);
-  if (50<=mouseX&&175<=mouseY && mouseX<=150 && mouseY<=250) {
-    if (stampmode == 0){
+  if (dist(mouseX, mouseY, 100, 250) <= 50) {
+    if (stampmode <= 1) {
       stampmode++;
-    }else{
+    } else {
       stampmode=0;
     }
   }
   //stamp action
   if (stampmode!= 0) {
-     image(photo,mouseX,mouseY);
+    if (stampmode == 1) {
+      image(photo, mouseX, mouseY);
+    } else {
+      image(photo2, mouseX-90, mouseY-90);
+    }
   }
   //color
   if (50<=mouseX & mouseX<=100 & 400<=mouseY & mouseY<=450) {
